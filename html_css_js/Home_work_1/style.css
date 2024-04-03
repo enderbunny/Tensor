@@ -1,10 +1,19 @@
+body {
+    background-image: url("circle-fill.png");
+}
 .grid {
     margin-top: 20px;
     padding: 20px;
     background-color: bisque;
 }
 #photo {
-    width: 15%;
+    width: 150px;
+    height: 150px;
+    background-size: cover;
+    background-image: url("Marinette_Dupain-Cheng_Square.png");
+}
+#photo:hover {
+    background-image: url("Ladybug_Square.png");
 }
 h5 {
     padding-top: 15px;
