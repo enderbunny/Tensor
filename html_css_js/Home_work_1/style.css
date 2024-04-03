@@ -1,0 +1,11 @@
+.grid {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: bisque;
+}
+#photo {
+    width: 15%;
+}
+h5 {
+    padding-top: 15px;
+}
