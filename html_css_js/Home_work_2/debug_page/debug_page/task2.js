@@ -53,5 +53,39 @@ function task22(year, month, arr) {
 }
 
 function task23(arr) {
-    return arr;
+    var step1 = arr.reduce(function(arr1, item) {
+        var year = item.year;
+        var month = item.month;
+
+        if (!arr1.some(el => el.year == year && el.month == month)) {
+                        arr1.push({
+                year: year, month: month, opsCount: 0
+            })
+        }
+        return arr1;
+    }, []);
+
+    step1.sort((a, b) => a.year - b.year || a.month - b.month);
+
+    var balance = 0;
+    var res = []
+    
+    for (let i = 0; i < step1.length; i++) {
+        var step2 = task22(step1[i].year, step1[i].month, arr);
+        balance += step2.monthBalance;
+        let date = new Date(step1[i].year, step1[i].month, 0);
+        let day = date.getDate();
+        let month = date.getMonth() + 1;
+        let year = date.getFullYear();
+        res.push({
+            date: year + '-' + day + '-' + month,
+            monthBalance: step2.monthBalance,
+            totalBalance: balance, 
+            monthWithdrawal: step2.monthWithdrawal,
+            withdrawalRate: step2.withdrawalRate,
+            rank: step2.rank
+        })
+    }
+
+    return res;
 }
