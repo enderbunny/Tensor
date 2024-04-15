@@ -1,64 +1,52 @@
+#массивы сдвигов по x и y для каждой клетке
 dx = (-1, -1, -1, 0, 0, 1, 1, 1)
 dy = (-1, 0, 1, -1, 1, -1, 0, 1)
-def check(l):
+
+#проверяем координаты точек, чтобы не выйти за пределы массива
+#если значение -1, делается срез массива
+#если значение больше индекса последнего элемента возвращается 0 
+def check(l, n):
     if l == n:
         return 0
     else:
         return l
 
 
-def evolution(mas):
-    arr1 = mas.copy()
+#сам процесс эволюции, получаем ещё и длинну массива, чтобы не высчитывать её каждый раз
+def evolution(mas, n):
+    new_mas = mas.copy()
     for i in range(n):
         for j in range(n):
             life = 0
+            #считаем кол-во живых соседей для клетки
             for k in range(len(dx)):
-                life += mas[check(i+dx[k])][check(j+dy[k])]
-            if mas[i][j] == 0:
-                if life == 3:
-                    arr1[i][j] = 1
+                life += mas[check(i+dx[k], n)][check(j+dy[k], n)]
+            if mas[i][j] == 1:
+                if (life < 2) or (life > 3):
+                    new_mas[i][j] = 0 #убиваем клетку, если ей одиноко или слишком много соседей
             else:
-                if life < 2 or life > 3:
-                    arr1[i][j] = 0
-    return arr1
+                if life == 3:
+                    new_mas[i][j] = 1 #оживляем, если есть 3 живых соседа
+    return new_mas
 
 
-
-with open('D:\VS Project\Tensor\Python\Home_work_2\input.txt') as f:
+with open("Python\Home_work_2\input.txt") as f:
     lines = f.read().split('\n')
     pass
-m = int(lines[0])
-n = len(lines) - 1
 
-arr = []
-for i in range(1, n + 1):
+m = int(lines[0])
+n1 = len(lines)
+
+arr = [] 
+for i in range(1, n1):
     arr.append(list(map(int, lines[i].split())))
 
-"""
-arr1 = arr.copy()
-for i in range(n):
-    for j in range(n):
-        life = 0
-        for k in range(len(dx)):
-            life += arr[check(i+dx[k])][check(j+dy[k])]
-        if arr[i][j] == 0:
-            if life == 3:
-                arr1[i][j] = 1
-        else:
-            if life < 2 and life > 3:
-                arr1[i][j] = 0
-"""
-for i in arr: 
-    print(' '.join(list(map(str, i))))
-print()
-
 while m != 0:
-    arr = evolution(arr)
-    print(m)
-    for i in arr: 
-        print(' '.join(list(map(str, i))))
-    print()
+    arr = evolution(arr, len(arr))
     m -= 1
 
-
-
+with open("Python\Home_work_2\output.txt", "w") as f:
+    for i in arr:
+        f.write(' '.join(list(map(str, i))))
+        f.write('\n')
+    pass
