@@ -50,3 +50,4 @@ with open("Python\Home_work_2\output.txt", "w") as f:
         f.write(' '.join(list(map(str, i))))
         f.write('\n')
     pass
+
