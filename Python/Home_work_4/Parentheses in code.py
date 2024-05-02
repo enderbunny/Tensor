@@ -2,21 +2,18 @@
 class Steak:
     def __init__(self):
         self.items = []
-        self.index = []
          
     def isEmpty(self):
         return self.items == []
 
     def push(self, item, index):
-        self.items.append(item)
-        self.index.append(index)
+        self.items.append((item, index))
 
     def pop(self):
         if len(self.items) == 0:
             return None
         else:
-            last = {"index": self.index.pop(), "item": self.items.pop()}
-            return last
+            return self.items.pop()
 
 
 brackets = {"(": ")", "{": "}", "[": "]"} #Какие ковычки у нас есть
@@ -29,7 +26,7 @@ for i, el in enumerate(string):
         stack.push(el, i)
     elif el in brackets.values(): #Если закрывающаяся, то смотрим подходит ли последней закрывающейся
         last_bracket = stack.pop()
-        if el != brackets[last_bracket["item"]]:
+        if el != brackets[last_bracket[0]]:
             index = i + 1
             break
 
@@ -39,4 +36,4 @@ else: #Отрабатываем на вероятность ошибки отк�
     if stack.isEmpty(): #Если в стеке нет скобок, значит все пары набраны
         print("Success")
     else: #Если там есть скобки, значит не все пары найдены
-        print(stack.pop()["index"] + 1) #выводим индекс последней открывающейся скобки без пары
+        print(stack.pop()[1] + 1) #выводим индекс последней открывающейся скобки без пары
